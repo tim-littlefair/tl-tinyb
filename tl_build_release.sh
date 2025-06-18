@@ -14,6 +14,12 @@ else
     so_arch_libdir="linux-$archname"
 fi
 
+# We want reproducible builds so that we can compare
+# precompiled .jar and .so files with git and know
+# whether they have changed.
+# The following definition helps with .so files.
+export SOURCE_DATE_EPOCH=0
+
 rm -rf build
 mkdir build
 cd build
@@ -21,12 +27,13 @@ cmake -DBUILDJAVA=ON ..
 make all
 
 cp ./java/tinyb.jar ../precompiled-release-artifacts/tinyb-0.5.1.tl250617.jar
-cp ./src/libtinyb.so ../precompiled-release-artifacts/linux-x86_64
-cp ./java/jni/libjavatinyb.so ../precompiled-release-artifacts/linux-x86_64
+cp ./src/libtinyb.so ../precompiled-release-artifacts/$so_arch_libdir
+cp ./java/jni/libjavatinyb.so ../precompiled-release-artifacts/$so_arch_libdir
 
-git diff --name-only ../precompiled-release-artifacts > changed_PRAs.txt
-ls -l changed_PRAs.txt
-echo The following precompiled artifacts have changed: { $(cat changed_PRAs.txt) }
+echo The following precompiled artifacts have changed:
+echo ----
+git diff --name-only ../precompiled-release-artifacts
+echo ----
 
 
 

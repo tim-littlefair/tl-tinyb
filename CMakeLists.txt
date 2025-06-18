@@ -37,7 +37,15 @@ string (REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.[0-9]+\\-([0-9]+).*" "\\1" VERSION_CO
 string (REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.[0-9]+-[0-9]+\\-(.*)" "\\1" VERSION_SHA1 "${VERSION}")
 set (VERSION_SHORT "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 set (VERSION_API "${VERSION_MAJOR}.${VERSION_MINOR}")
-string(TIMESTAMP BUILD_TSTAMP "%Y-%m-%d %H:%M:%S")
+
+# TL 250618
+# For reproducible builds, 
+# https://reproducible-builds.org/docs/source-date-epoch/
+# recommends the following change:
+#string(TIMESTAMP BUILD_TSTAMP "%Y-%m-%d %H:%M:%S")
+string(TIMESTAMP BUILD_DATE "%Y-%m-%d" UTC)
+string(TIMESTAMP BUILD_TSTAMP "%Y-%m-%d %H:%M:%S" UTC)
+# end of TL 250618
 
 if ("${VERSION_COMMIT}" MATCHES "^v.*")
   set (VERSION_COMMIT "")
