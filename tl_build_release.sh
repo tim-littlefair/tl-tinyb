@@ -30,13 +30,15 @@ cp ./java/tinyb.jar ../precompiled-release-artifacts/tinyb-0.5.1.tl250617.jar
 cp ./src/libtinyb.so ../precompiled-release-artifacts/$so_arch_libdir
 cp ./java/jni/libjavatinyb.so ../precompiled-release-artifacts/$so_arch_libdir
 
-echo The following precompiled artifacts have changed:
-echo ----
-git diff --name-only ../precompiled-release-artifacts
-echo ----
-
 cd ../precompiled-release-artifacts
 zip tinyb-0.5.1.tl250617.zip *.jar -r linux*
+echo Git status:
+echo -----------
+git status  
+echo -----------
+cd ../build
+
+
 
 
 
