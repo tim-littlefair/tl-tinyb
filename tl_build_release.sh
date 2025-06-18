@@ -35,6 +35,9 @@ echo ----
 git diff --name-only ../precompiled-release-artifacts
 echo ----
 
+cd ../precompiled-release-artifacts
+zip tinyb-0.5.1.tl250617.zip *.jar -r linux*
+
 
 
 
